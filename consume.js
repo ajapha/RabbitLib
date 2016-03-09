@@ -13,7 +13,13 @@ module.exports = {
     },
     
     consumeReply: function(microservice, callback) {
-        
+        var queueName = microservice + '-reply',
+            exchangeName = microservice,    
+            queueConfig = {
+            autoDelete: false,
+            durable: true
+        };
+        createConsumer(queueName, exchangeName, queueConfig, '#.reply.#', callback);
     },
     
     consumeObserver: function(microservice, listenTo, callback, eventType) {
