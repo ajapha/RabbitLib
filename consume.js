@@ -52,7 +52,7 @@ function createChannel() {
 
 
 function createConsumer(queueName, exchangeName, queueConfig, bindingKey, consumeCallback) {
-    createChannel.then(function(ch) {
+    createChannel().then(function(ch) {
         assertExchange(exchangeName).then(function(ex) {
             var exchange = ex.exchange;
             assertQueue(queueName, queueConfig).then(function(q) {
