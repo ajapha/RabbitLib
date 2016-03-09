@@ -4,12 +4,12 @@ channel = require('./channel');
 module.exports = {
     
     consumeWorker: function(microservice, callback, isApi, jobType) {
-        var jobType = jobType || '*';
+        var type = jobType || '*';
         var queueConfig = {
             autoDelete: isApi,
             durable: !isApi
         };
-        createConsumer(microservice, microservice, queueConfig, '#.job.' + jobType + '.#');
+        createConsumer(microservice, microservice, queueConfig, '#.job.' + type + '.#', callback);
     },
     
     consumeReply: function(microservice, callback) {
