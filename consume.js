@@ -46,7 +46,7 @@ module.exports = {
 }
 
 function createChannel() {
-    var channel = new Channel;
+    var channel = new Channel();
     return channel.getChannel();
 }
 
