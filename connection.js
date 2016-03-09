@@ -10,7 +10,11 @@ function connect() {
         conn.on("error", function(err) {
           if (err.message !== "Connection closing") {
             console.error("[AMQP] conn error", err.message);
+            console.error("[AMQP] reconnecting");
             connect();
+          }
+          else {
+              console.error("[AMQP] conn error", err.message);
           }
         });
         conn.on("close", function() {
