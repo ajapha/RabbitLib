@@ -1,4 +1,4 @@
-channel = require('./channel');
+Channel = require('./channel');
 
 
 module.exports = {
