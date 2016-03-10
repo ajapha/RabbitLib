@@ -59,7 +59,7 @@ function createConsumer(queueName, exchangeName, queueConfig, bindingKey, consum
             assertQueue(ch, queueName, queueConfig).then(function(q) {
                 var queue = q.queue;console.log('queue asserted ' + queue, bindingKey);
                 ch.bindQueue(queue, exchange, bindingKey, {}, function(err, ok) {
-                    queue.consume(queue, function(msg) {
+                    ch.consume(queue, function(msg) {
                         var done = function() {
                             ch.ack(msg);
                         };
