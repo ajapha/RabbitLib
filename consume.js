@@ -4,6 +4,7 @@ Channel = require('./channel');
 module.exports = {
     
     consumeWorker: function(microservice, callback, isApi, jobType) {
+        console.log('setting up worker consumer for', microservice);
         var type = jobType || '*';
         var queueConfig = {
             autoDelete: isApi,
@@ -53,10 +54,10 @@ function createChannel() {
 
 function createConsumer(queueName, exchangeName, queueConfig, bindingKey, consumeCallback) {
     createChannel().then(function(ch) {
-        assertExchange(exchangeName, 'topic').then(function(ex) {
-            var exchange = ex.exchange;
-            assertQueue(queueName, queueConfig).then(function(q) {
-                var queue = q.queue;
+        assertExchange(ch, exchangeName).then(function(ex) {
+            var exchange = ex.exchange;console.log('exchange asserted ' + ex);
+            assertQueue(ch, queueName, queueConfig).then(function(q) {
+                var queue = q.queue;console.log('queue asserted ' + queue, bindingKey);
                 ch.bindQueue(queue, exchange, bindingKey, function(err, ok) {
                     queue.consume(queue, function(msg) {
                         var done = function() {
