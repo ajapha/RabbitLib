@@ -20,7 +20,7 @@ function Channel() {
             console.log('Channel closed!!!');
         });
         ch.on('error', function(err) {
-            console.log('Error on Channel!!!, restarting...')
+            console.log('Error on Channel!!!', err, 'restarting...')
             openChannel();
         });
         ch.on('return', function(msg) {
