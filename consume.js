@@ -57,14 +57,20 @@ function createConsumer(queueName, exchangeName, queueConfig, bindingKey, consum
         assertExchange(ch, exchangeName).then(function(ex) {
             var exchange = ex.exchange;console.log('exchange asserted ' + exchange);
             assertQueue(ch, queueName, queueConfig).then(function(q) {
-                var queue = q.queue;console.log('queue asserted ' + queue, bindingKey);
+                var queue = q.queue;console.log('queue asserted ' + queue);
                 ch.bindQueue(queue, exchange, bindingKey, {}, function(err, ok) {
-                    ch.consume(queue, function(msg) {
-                        var done = function() {
-                            ch.ack(msg);
-                        };
-                        consumeCallback(msg, done);
-                    });
+                    if (err) {
+                        console.log('Error binding queue', queue, 'to exchange', exchange, 'with binding key', bindingKey, err);
+                    } else {
+                        console.log('Bound queue', queue, 'to exchange', exchange, 'with binding key', bindingKey);
+                        ch.consume(queue, function(msg) {
+                            console.log('message received!');
+                            var done = function() {
+                                ch.ack(msg);
+                            };
+                            consumeCallback(msg, done);
+                        });
+                    }
                 });
             }); 
         });
