@@ -16,7 +16,7 @@ module.exports = function(exchangeName, job, event, msgContent) {
          var content = new Buffer(JSON.stringify(msgContent));
          ch.publish(exchange, routingKey, content)   
     });
-}
+});
 
 function buildRoutingKey(job, event) {
     if (!job && !event) throw new Error('Empty Routing Key');
