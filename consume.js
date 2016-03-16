@@ -1,5 +1,4 @@
 Channel = require('./channel');
-consume('BalanceInquiry.event.eventType', callback)
 
 module.exports = {
     
