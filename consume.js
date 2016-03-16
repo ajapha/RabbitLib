@@ -1,5 +1,5 @@
 Channel = require('./channel');
-
+consume('BalanceInquiry.event.eventType', callback)
 
 module.exports = {
     
@@ -62,8 +62,12 @@ function createConsumer(queueName, exchangeName, queueConfig, bindingKey, consum
                     console.log('Bound queue', queue, 'to exchange', exchange, 'with binding key', bindingKey);
                     ch.consume(queue, function(msg) {
                         console.log('message received!');
-                        var done = function() {
-                            ch.ack(msg);
+                        var done = function(failed) {
+                            if (typeof failed === "undefined" || failed) {
+                                ch.ack(msg);
+                            } else {
+                                ch.nack(msg);
+                            }
                         };
                         consumeCallback(msg, done);
                     });
