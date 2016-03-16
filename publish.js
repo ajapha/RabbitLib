@@ -8,15 +8,15 @@ function assertExchange(channel, microservice) {
 
 module.exports = function(exchangeName, job, event, msgContent) {
     channel.getChannel().then(function(ch) {
-         assertExchange(ch, exchangeName).then(function(ex) {
+        assertExchange(ch, exchangeName).then(function(ex) {
             var exchange = ex.exchange;
             console.log('exchange asserted ' + exchange);
-         
-         var routingKey = buildRoutingKey(job, event)
-         var content = new Buffer(JSON.stringify(msgContent));
-         ch.publish(exchange, routingKey, content)   
+            var routingKey = buildRoutingKey(job, event)
+            var content = new Buffer(JSON.stringify(msgContent));
+            ch.publish(exchange, routingKey, content);
+        });
     });
-});
+}
 
 function buildRoutingKey(job, event) {
     if (!job && !event) throw new Error('Empty Routing Key');
