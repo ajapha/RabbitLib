@@ -6,7 +6,7 @@ function assertExchange(channel, microservice) {
     return channel.assertExchange(microservice, 'topic');
 }
 
-module.exports = function(exchangeName, job, event, msgContent) {
+module.exports = function(exchangeName, job, event, msgContent, onConfirm) {
     console.log('publish called ' + exchangeName);
     channel.getChannel().then(function(ch) {
         assertExchange(ch, exchangeName).then(function(ex) {
@@ -14,7 +14,7 @@ module.exports = function(exchangeName, job, event, msgContent) {
             console.log('exchange asserted ' + exchange);
             var routingKey = buildRoutingKey(job, event);
             var content = new Buffer(JSON.stringify(msgContent));
-            ch.publish(exchange, routingKey, content);
+            ch.publish(exchange, routingKey, content, onConfirm);
         });
     }, function(err) {console.log(err);});
 }
