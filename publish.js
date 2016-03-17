@@ -14,7 +14,7 @@ module.exports = function(exchangeName, job, event, msgContent, onConfirm) {
             console.log('exchange asserted ' + exchange);
             var routingKey = buildRoutingKey(job, event);
             var content = new Buffer(JSON.stringify(msgContent));
-            ch.publish(exchange, routingKey, content, onConfirm);
+            ch.publish(exchange, routingKey, content, {}, onConfirm);
         });
     }, function(err) {console.log(err);});
 }
