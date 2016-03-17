@@ -12,7 +12,7 @@ module.exports = function(exchangeName, job, event, msgContent) {
         assertExchange(ch, exchangeName).then(function(ex) {
             var exchange = ex.exchange;
             console.log('exchange asserted ' + exchange);
-            var routingKey = buildRoutingKey(job, event)
+            var routingKey = buildRoutingKey(job, event);
             var content = new Buffer(JSON.stringify(msgContent));
             ch.publish(exchange, routingKey, content);
         });

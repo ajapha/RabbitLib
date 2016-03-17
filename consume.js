@@ -13,7 +13,7 @@ module.exports = {
     },
     
     consumeReply: function(microservice, callback) {
-        var queueName = microservice + '-reply',
+        var queueName = microservice + '-Reply',
             exchangeName = microservice,    
             queueConfig = {
             autoDelete: false,
@@ -24,7 +24,7 @@ module.exports = {
     
     consumeObserver: function(microservice, listenTo, callback, eventType) {
         var bindingKey = eventType ? '#event.' + eventType + '#' : '#'
-        var queueName = microservice,
+        var queueName = microservice  + '-' + listenTo + '-Observer',
             exchangeName = listenTo,    
             queueConfig = {
             autoDelete: true,
@@ -35,7 +35,7 @@ module.exports = {
     
     consumeEventListener: function(microservice, listenTo, callback, eventType) {
         var bindingKey = '#.event.' + (eventType ? eventType + '.#' : '#');
-        var queueName = microservice,
+        var queueName = microservice + '-' + listenTo + '-Events',
             exchangeName = listenTo,    
             queueConfig = {
             autoDelete: false,
