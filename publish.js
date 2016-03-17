@@ -1,5 +1,6 @@
 Channel = require('./channel');
 
+
 function assertExchange(channel, microservice) {
     return channel.assertExchange(microservice, 'topic');
 }
@@ -14,6 +15,7 @@ module.exports = function(exchangeName, job, event, msgContent) {
             var routingKey = buildRoutingKey(job, event)
             var content = new Buffer(JSON.stringify(msgContent));
             ch.publish(exchange, routingKey, content);
+            ch.close();
         });
     }, function(err) {console.log(err);});
 }
