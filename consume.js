@@ -34,6 +34,7 @@ module.exports = {
     },
     
     consumeEventListener: function(microservice, listenTo, callback, eventType) {
+        var bindingKey = '#.event.' + (eventType ? eventType + '.#' : '#');
         var queueName = microservice,
             exchangeName = listenTo,    
             queueConfig = {
