@@ -6,7 +6,8 @@ function Channel() {
     function openChannel() {
         var channelPromise = new Promise(function(resolve, reject) {
             connection().then(function(conn) {
-                channel = conn.createChannel().then(function(ch) {
+                channel = conn.createChannel();
+                channel.then(function(ch) {
                     setChannelEventListeners(ch);
                     resolve(ch);
                     console.log('channel created!');
