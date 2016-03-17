@@ -41,7 +41,7 @@ module.exports = {
             autoDelete: false,
             durable: true
         };
-        createConsumer(queueName, exchangeName, queueConfig, '#.event.' + eventType + '.#', callback);
+        createConsumer(queueName, exchangeName, queueConfig, bindingKey, callback);
     }
     
 }
