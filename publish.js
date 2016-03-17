@@ -28,7 +28,7 @@ function buildRoutingKey(job, event) {
     }
     if (event) {
         routingKey += 'event.';
-        routingKey += (typeof job === "string" ? job : '');
+        routingKey += (typeof event === "string" ? event : '');
     }
     return routingKey;
 }
