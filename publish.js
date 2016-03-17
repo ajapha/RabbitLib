@@ -1,12 +1,11 @@
 Channel = require('./channel');
 
-var channel = new Channel();
-
 function assertExchange(channel, microservice) {
     return channel.assertExchange(microservice, 'topic');
 }
 
 module.exports = function(exchangeName, job, event, msgContent) {
+    var channel = new Channel();
     console.log('publish called ' + exchangeName);
     channel.getChannel().then(function(ch) {
         assertExchange(ch, exchangeName).then(function(ex) {
