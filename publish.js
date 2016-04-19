@@ -13,7 +13,8 @@ module.exports = function(exchangeName, job, event, msgContent, onConfirm, onRep
         assertExchange(ch, exchangeName).then(function(ex) {
             var exchange = ex.exchange;
             console.log('exchange asserted ' + exchange);
-            var routingKey = buildRoutingKey(job, event);
+            var routingKey = exchangeName === '' ? job : buildRoutingKey(job, event);
+            console.log('Routing key', routingKey);
             if (onReply) {
                 ch.assertQueue('', {durable: false, exclusive: true}).then((q) => {
                     var replyQueue = q.queue;
