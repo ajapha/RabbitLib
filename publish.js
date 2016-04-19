@@ -13,13 +13,13 @@ module.exports = function(exchangeName, job, event, msgContent, onConfirm, onRep
         var exchangeFunc = exchangeName !== '' ? 
             assertExchange : 
             _ => { 
-                return Promise.resolve({exchange: 'default'});
+                return Promise.resolve({exchange: ''});
             }; 
         
         exchangeFunc(ch, exchangeName).then(function(ex) {
             var exchange = ex.exchange;
             console.log('exchange asserted ' + exchange);
-            var routingKey = exchangeName === '' ? job : buildRoutingKey(job, event);
+            var routingKey = exchange === '' ? job : buildRoutingKey(job, event);
             console.log('Routing key', routingKey);
             if (onReply) {
                 ch.assertQueue('', {durable: false, exclusive: true}).then((q) => {
