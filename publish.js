@@ -10,7 +10,13 @@ module.exports = function(exchangeName, job, event, msgContent, onConfirm, onRep
     
     console.log('publish called ' + exchangeName);
     channel.getChannel().then(function(ch) {
-        assertExchange(ch, exchangeName).then(function(ex) {
+        var exchangeFunc = exchangeName !== '' ? 
+            assertExchange : 
+            _ => { 
+                return Promise.resolve({exchange: 'default'});
+            }; 
+        
+        exchangeFunc(ch, exchangeName).then(function(ex) {
             var exchange = ex.exchange;
             console.log('exchange asserted ' + exchange);
             var routingKey = exchangeName === '' ? job : buildRoutingKey(job, event);
