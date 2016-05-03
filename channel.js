@@ -22,7 +22,7 @@ function Channel() {
         });
         ch.on('error', function(err) {
             console.log('Error on Channel!!!', err, 'restarting...');
-            console.log(err.trace);
+            console.log(err.stack);
             openChannel();
         });
         ch.on('return', function(msg) {
